@@ -2,52 +2,126 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
-  <title>Моите бележки</title>
+  <title>Бележки</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    input, textarea { width: 100%; margin: 10px 0; padding: 10px; }
-    button { padding: 10px 20px; }
-    .note-link { margin: 5px 0; display: block; font-weight: bold; }
+    :root {
+      --bg-light: #ffffff;
+      --bg-dark: #1e1e1e;
+      --text-light: #000000;
+      --text-dark: #ffffff;
+    }
+
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #notesList {
+      margin-top: 30px;
+    }
+
+    .note {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+
+    body.dark .note {
+      background-color: #333;
+    }
+
+    .empty {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 18px;
+      opacity: 0.6;
+    }
+
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 30px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   </style>
 </head>
 <body>
+  <div class="theme-toggle" onclick="toggleTheme()">🌓</div>
   <h1>Моите бележки</h1>
-  <input type="text" id="noteTitle" placeholder="Заглавие">
-  <textarea id="noteContent" placeholder="Съдържание..."></textarea>
-  <button onclick="saveNote()">Запази</button>
-
-  <h2>Списък с бележки</h2>
   <div id="notesList"></div>
+  <div class="empty" id="emptyMessage">Все още нямате бележки</div>
+  <button class="fab" onclick="location.href='new.html'">+</button>
 
   <script>
-    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+    const notes = JSON.parse(localStorage.getItem("notes")) || [];
+    const list = document.getElementById("notesList");
+    const emptyMsg = document.getElementById("emptyMessage");
 
-    function saveNote() {
-      const title = document.getElementById("noteTitle").value.trim();
-      const content = document.getElementById("noteContent").value.trim();
-      if (title && content) {
-        const note = { title, content };
-        notes.push(note);
-        localStorage.setItem("notes", JSON.stringify(notes));
-        displayNotes();
-        document.getElementById("noteTitle").value = "";
-        document.getElementById("noteContent").value = "";
+    function displayNotes() {
+      list.innerHTML = "";
+      if (notes.length === 0) {
+        emptyMsg.style.display = "block";
+      } else {
+        emptyMsg.style.display = "none";
+        notes.forEach((note, index) => {
+          const div = document.createElement("div");
+          div.className = "note";
+          div.innerHTML = `<a href="note.html?id=${index}">${note.title}</a>`;
+          list.appendChild(div);
+        });
       }
     }
 
-    function displayNotes() {
-      const list = document.getElementById("notesList");
-      list.innerHTML = "";
-      notes.forEach((note, index) => {
-        const link = document.createElement("a");
-        link.href = `note.html?id=${index}`;
-        link.textContent = note.title;
-        link.className = "note-link";
-        list.appendChild(link);
-      });
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     }
 
-    window.onload = displayNotes;
+    function loadTheme() {
+      const saved = localStorage.getItem("theme");
+      if (saved === "dark") {
+        document.body.classList.add("dark");
+      }
+    }
+
+    loadTheme();
+    displayNotes();
   </script>
 </body>
 </html>
