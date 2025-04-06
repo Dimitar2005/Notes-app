@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <title>Бележка</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, textarea { width: 100%; margin: 10px 0; padding: 10px; }
+    button { padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h1>Редакция на бележка</h1>
+  <input type="text" id="noteTitle">
+  <textarea id="noteContent" rows="10"></textarea>
+  <button onclick="saveChanges()">Запази промените</button>
+  <a href="index.html">⬅ Назад</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const noteId = params.get("id");
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    if (noteId !== null && notes[noteId]) {
+      document.getElementById("noteTitle").value = notes[noteId].title;
+      document.getElementById("noteContent").value = notes[noteId].content;
+    }
+
+    function saveChanges() {
+      notes[noteId].title = document.getElementById("noteTitle").value;
+      notes[noteId].content = document.getElementById("noteContent").value;
+      localStorage.setItem("notes", JSON.stringify(notes));
+      alert("Бележката е запазена!");
+    }
+  </script>
+</body>
+</html>
