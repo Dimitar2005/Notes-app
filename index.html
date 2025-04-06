@@ -109,6 +109,7 @@
     const list = document.getElementById("notesList");
     const emptyMsg = document.getElementById("emptyMessage");
 
+    // Показване на запазените бележки
     function displayNotes() {
       list.innerHTML = "";
       if (notes.length === 0) {
@@ -138,6 +139,7 @@
       }
     }
 
+    // Изтриване на бележка
     function deleteNote(index) {
       if (confirm("Сигурен ли си, че искаш да изтриеш тази бележка?")) {
         notes.splice(index, 1);
@@ -146,6 +148,7 @@
       }
     }
 
+    // Смяна на темата
     function toggleTheme() {
       document.body.classList.toggle("dark");
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
@@ -160,7 +163,7 @@
 
     loadTheme();
     displayNotes();
-    </script>
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
