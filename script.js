@@ -32,10 +32,7 @@ window.onload = function() {
     document.getElementById('note-content').value = content;
   }
 };
-// Функция за създаване на нова бележка
-function createNote() {
-  alert('Създаване на нова бележка...');
-}
+
 
 // Регистрация на Service Worker
 if ('serviceWorker' in navigator) {
