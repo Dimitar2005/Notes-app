@@ -2,10 +2,7 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="rdm1pP_aDdaAVpO010zwlV_hPCpEQKhAeoL24oxm3qk" />
   <title>Бележки</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="favicon-16x16.png" type="image/png">
   <style>
     :root {
       --bg-light: #ffffff;
@@ -109,7 +106,6 @@
     const list = document.getElementById("notesList");
     const emptyMsg = document.getElementById("emptyMessage");
 
-    // Показване на запазените бележки
     function displayNotes() {
       list.innerHTML = "";
       if (notes.length === 0) {
@@ -139,7 +135,6 @@
       }
     }
 
-    // Изтриване на бележка
     function deleteNote(index) {
       if (confirm("Сигурен ли си, че искаш да изтриеш тази бележка?")) {
         notes.splice(index, 1);
@@ -148,7 +143,6 @@
       }
     }
 
-    // Смяна на темата
     function toggleTheme() {
       document.body.classList.toggle("dark");
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
@@ -164,6 +158,5 @@
     loadTheme();
     displayNotes();
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
