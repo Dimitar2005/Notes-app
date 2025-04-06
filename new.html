@@ -147,3 +147,55 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Нова бележка</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>Създай нова бележка</h1>
+
+  <form id="noteForm">
+    <input type="text" id="noteTitle" placeholder="Заглавие" required><br><br>
+    <textarea id="noteContent" placeholder="Съдържание на бележка" required></textarea><br><br>
+    <button type="submit">Запази бележката</button>
+  </form>
+
+  <script>
+    // Получаваме елементите от формата
+    const form = document.getElementById("noteForm");
+    const titleInput = document.getElementById("noteTitle");
+    const contentInput = document.getElementById("noteContent");
+
+    // Съществуващите бележки в localStorage
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    // Функция за добавяне на нова бележка
+    function addNote() {
+      const title = titleInput.value;
+      const content = contentInput.value;
+
+      // Добавяне на новата бележка в масива
+      notes.push({ title, content });
+
+      // Записваме новия масив в localStorage
+      localStorage.setItem("notes", JSON.stringify(notes));
+
+      // Пренасочваме към началната страница
+      window.location.href = "index.html";
+    }
+
+    // Обработваме изпращането на формата
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();  // Спираме стандартното действие на формата
+      addNote();
+    });
+  </script>
+
+</body>
+</html>
+
