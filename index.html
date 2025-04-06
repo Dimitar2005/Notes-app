@@ -156,7 +156,6 @@
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     }
 
-    // Зареждане на темата от localStorage
     function loadTheme() {
       const saved = localStorage.getItem("theme");
       if (saved === "dark") {
@@ -164,7 +163,6 @@
       }
     }
 
-    // Зареждане на темата и показване на бележките
     loadTheme();
     displayNotes();
   </script>
