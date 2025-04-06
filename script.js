@@ -1,3 +1,9 @@
+// Функция за създаване на нова бележка
+function createNote() {
+  alert('Създаване на нова бележка...');
+}
+
+// Регистрация на Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js').then((registration) => {
